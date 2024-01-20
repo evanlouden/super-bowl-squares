@@ -1,0 +1,22 @@
+<div class="w-full m-auto sm:w-10/12">
+  <div class="grid grid-cols-11 gap-1">
+    <div class="px-1 py-2 text-center bg-white border rounded border-stone-900" style="visibility: hidden;" >
+    </div>
+    <% @game.axis_headers("x").sort_by(&:position).each do |header| %>
+      <div class="px-1 py-2 text-center bg-white border rounded border-stone-900">
+        H <%= header.axis %>:<%= header.position %>
+      </div>
+    <% end %>
+    <% 10.times do |x| %>
+      <% header = @game.axis_headers("y").find { |header| header.position == x } %>
+      <div class="px-1 py-2 text-center bg-white border rounded border-stone-900">
+        H <%= header.axis %>:<%= header.position %>
+      </div>
+      <% 10.times do |y| %>
+        <div class="px-1 py-2 text-center bg-white border rounded border-stone-900">
+          <%= x %>:<%= y %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
