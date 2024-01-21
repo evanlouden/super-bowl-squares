@@ -1,0 +1,6 @@
+<div class="flex items-center justify-center h-12 text-center bg-white border rounded cursor-pointer border-neutral-900 hover:bg-neutral-200">
+  <%= button_to(square, params: { user_id: user_id }, method: :put, class: "w-full h-full", form_class: "w-full h-full") do %>
+    <% puts "*** #{name} " %>
+    <%= name %>
+  <% end %>
+</div>
