@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :headers
   resources :squares
-  resources :games
+  resources :games do
+    resources :locks, only: :create
+  end
   resources :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

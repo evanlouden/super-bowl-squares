@@ -41,6 +41,6 @@ class SquaresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def square_params
-      params.permit(:user_id)
+      params.require(:square).permit(:name)
     end
 end

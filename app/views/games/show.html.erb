@@ -1,22 +1,28 @@
 <div class="min-h-12"></div>
-<div class="w-full m-auto sm:w-10/12">
-  <div class="grid grid-cols-11 gap-1">
-    <div class="square" style="visibility: hidden;" >
-    </div>
-    <% @game.axis_headers("x").sort_by(&:position).each do |header| %>
-      <div class="square">
+<div data-controller="squares">
+  <div class="w-full m-auto sm:w-10/12">
+    <div class="grid grid-cols-11 gap-1">
+      <div class="square" style="visibility: hidden;" >
+      </div>
+      <% @game.axis_headers("x").sort_by(&:position).each do |header| %>
+        <div class="square">
+          <%= header.position %>
+        </div>
+      <% end %>
+      <% @game.axis_headers("y").sort_by(&:position).each do |header| %>
+        <div class="square">
         <%= header.position %>
-      </div>
-    <% end %>
-    <% @game.axis_headers("y").sort_by(&:position).each do |header| %>
-      <div class="square">
-       <%= header.position %>
-      </div>
-      <% @game.squares.filter { |square| square.x == header.position }.sort_by(&:y).each do |square| %>
-        <%= turbo_frame_tag(square) do %>
-          <%= render(SquareComponent.new(square)) %>
+        </div>
+        <% @game.squares.filter { |square| square.x == header.position }.sort_by(&:y).each do |square| %>
+          <%= turbo_frame_tag(square) do %>
+            <%= render(SquareComponent.new(square)) %>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
+    </div>
+  </div>
+  <div id="name_container" class="flex items-center justify-center mt-4">
+    <span class="text-2xl text-white shadow-sm">Name:</span><%= text_field_tag :name, {}, data: { squares_target: :name, action: "change->squares#showLockButton" }, class: "h-12 mx-2 rounded p-2" %>
+    <%= button_to "Lock squares", game_locks_path(@game), id: :lock_button, data: { action: "click->squares#lockSquares" }, class: "bg-yellow-500 rounded px-4 py-2 text-2xl shadow-lg mx-2 hidden" %>
   </div>
 </div>

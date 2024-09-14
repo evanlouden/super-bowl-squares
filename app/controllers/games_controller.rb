@@ -8,7 +8,7 @@ class GamesController < ApplicationController
 
   # GET /games/1 or /games/1.json
   def show
-    @game = Game.includes(:headers, squares: :user).find(params[:id])
+    @game = Game.includes(:headers, :squares).find(params[:id])
   end
 
   # GET /games/new
