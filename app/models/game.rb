@@ -1,4 +1,5 @@
 class Game < ApplicationRecord
+  belongs_to :user
   has_many :headers, dependent: :destroy
   has_many :squares, dependent: :destroy
 
