@@ -1,12 +1,9 @@
 <div class="<%= class_list %>">
   <% if locked? %>
     <%= name %>
-  <% elsif name.present? %>
-    <%= button_to(square, params: { square: { name: nil } }, method: :put, class: "w-full h-full", form_class: "w-full h-full") do %>
-      <%= name %>
-    <% end %>
   <% else %>
-    <%= button_to(square, method: :put, class: "w-full h-full", form_class: "w-full h-full", data: { action: "click->squares#submit" }) do %>
+
+    <%= button_to(square, method: :put, class: "w-full h-full", form_class: "w-full h-full") do %>
       <%= name %>
     <% end %>
   <% end %>

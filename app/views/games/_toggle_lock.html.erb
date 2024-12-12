@@ -1,0 +1,7 @@
+<%= button_to(game, method: :put, class: "w-full h-full", form_class: "w-full h-full", data: { turbo: false }) do %>
+  <% if game.locked? %>
+    Unlock
+  <% else %>
+    Lock
+  <% end %>
+<% end %>
