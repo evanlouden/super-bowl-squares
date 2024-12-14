@@ -3,7 +3,7 @@ class SquaresController < ApplicationController
 
   def update
     respond_to do |format|
-      if @square.update(user: square_user)
+      if @square.update(user: @square.user.nil? ? current_user : nil)
         format.turbo_stream
       end
     end
@@ -12,14 +12,6 @@ class SquaresController < ApplicationController
   private
 
   def set_square
-    @square = Square.find(params[:id])
-  end
-
-  def square_user
-    if @square.user.present?
-      nil
-    else
-      current_user
-    end
+    @square = Square.includes(:user, :game).find(params[:id])
   end
 end

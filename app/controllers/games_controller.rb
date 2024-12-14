@@ -9,7 +9,7 @@ class GamesController < ApplicationController
 
 
   def create
-    @game = current_user.games.new
+    @game = current_user.games.new(game_params)
 
     respond_to do |format|
       if @game.save
@@ -29,5 +29,11 @@ class GamesController < ApplicationController
       format.html { redirect_to games_url, notice: "Game was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def game_params
+    params.require(:game).permit(:square_price)
   end
 end

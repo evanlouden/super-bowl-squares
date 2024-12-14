@@ -1,8 +1,10 @@
 <h1>New game</h1>
 
-<%= render "form", game: @game %>
-
-<br>
+<%= form_for @game do |f| %>
+  <%= f.label :square_price %>
+  <%= f.number_field :square_price %>
+  <%= f.submit "Create Game", class: "rounded-md bg-blue-500 text-white px-4 py-2" %>
+<% end %>
 
 <div>
   <%= link_to "Back to games", games_path %>

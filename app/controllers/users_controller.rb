@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
+    @form = Forms::FindGameForm.new
   end
 
   # GET /users/new

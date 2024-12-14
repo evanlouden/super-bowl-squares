@@ -20,3 +20,9 @@
     <% end %>
   </div>
 </div>
+
+<% @game.users.distinct.each do |user| %>
+  <%= turbo_frame_tag(user) do %>
+    <%= user.name %> $<%= user.squares.length * @game.square_price %>
+  <% end %>
+<% end %>

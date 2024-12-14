@@ -7,3 +7,5 @@ export default class extends Controller {
     }
   }
 }
+
+// data: { controller: "confirm", action: "click->confirm#confirm", confirm_message_param: "Create a new game?" }

@@ -11,4 +11,8 @@
   <%= link_to game.share_code, game_path(game) %>
 <% end %>
 
-<%= button_to "New Game", games_path, method: :post, data: { controller: "confirm", action: "click->confirm#confirm", confirm_message_param: "Create a new game?" }, class: "rounded-md bg-blue-500 text-white px-4 py-2" %>
+<%= link_to "New Game", new_game_path, class: "rounded-md bg-blue-500 text-white px-4 py-2" %>
+
+<%= turbo_frame_tag "find_game" do %>
+  <%= link_to "Find Game", new_find_game_path %>
+<% end %>

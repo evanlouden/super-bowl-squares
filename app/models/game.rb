@@ -2,6 +2,9 @@ class Game < ApplicationRecord
   belongs_to :user
   has_many :headers, dependent: :destroy
   has_many :squares, dependent: :destroy
+  has_many :users, through: :squares
+
+  validates :square_price, presence: true, numericality: { greater_than: 0 }
 
   before_create :create_share_code
   after_create :create_squares

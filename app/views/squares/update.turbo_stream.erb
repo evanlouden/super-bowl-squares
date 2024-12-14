@@ -3,3 +3,7 @@
     <%= render(SquareComponent.new(@square)) %>
   <% end %>
 <% end %>
+
+<%= turbo_stream.update(current_user) do %>
+  <%= current_user.name %> $<%= current_user.squares.length * @square.game.square_price %>
+<% end %>
