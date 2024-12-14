@@ -1,10 +1,14 @@
-<p style="color: green"><%= notice %></p>
+<%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "rounded-md bg-red-500 text-white px-4 py-2" %>
 
-<%= render @user %>
+<h2>Games</h2>
+<% @user.games.each do |game| %>
+  <%= link_to game.share_code, game_path(game) %>
+<% end %>
 
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
+<h2>Squares Games</h2>
 
-  <%= button_to "Destroy this user", @user, method: :delete %>
-</div>
+<% @user.squares_games.each do |game| %>
+  <%= link_to game.share_code, game_path(game) %>
+<% end %>
+
+<%= button_to "New Game", games_path, method: :post, data: { controller: "confirm", action: "click->confirm#confirm", confirm_message_param: "Create a new game?" }, class: "rounded-md bg-blue-500 text-white px-4 py-2" %>

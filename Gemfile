@@ -2,16 +2,16 @@ source "https://rubygems.org"
 
 ruby "3.3.6"
 
-gem "rails", "~> 7.1.3"
-gem "sprockets-rails"
+gem "cssbundling-rails"
+gem "devise", "~> 4.9"
+gem "jsbundling-rails"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
-gem "jsbundling-rails"
-gem "turbo-rails"
-gem "stimulus-rails"
-gem "cssbundling-rails"
+gem "rails", "~> 7.1.3"
 gem "redis", ">= 4.0.1"
-
+gem "sprockets-rails"
+gem "stimulus-rails"
+gem "turbo-rails"
 gem "view_component", "~> 3.10"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
