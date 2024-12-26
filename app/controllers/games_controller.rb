@@ -13,6 +13,7 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
+        Services::CreateSquares.new(@game).call
         format.html { redirect_to game_url(@game), notice: "Game was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }

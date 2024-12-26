@@ -14,7 +14,7 @@
       <div class="square">
         <%= header.value %>
       </div>
-      <% @game.squares.filter { |square| square.x == header.position }.sort_by(&:y).each do |square| %>
+      <% @game.squares.filter { |square| square.y == header.position }.sort_by(&:x).each do |square| %>
         <%= turbo_frame_tag(square) do %>
           <%= render(SquareComponent.new(square)) %>
         <% end %>

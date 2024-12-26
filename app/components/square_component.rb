@@ -7,7 +7,7 @@ class SquareComponent < ViewComponent::Base
 
   private
   attr_reader :square
-  delegate :game, :user, to: :square
+  delegate :id, :game, :user, to: :square
   delegate :turbo_frame_tag, to: :helpers
 
   def class_list
