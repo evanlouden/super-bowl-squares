@@ -1,0 +1,10 @@
+<p>
+  <%= payment.user.name %> $<%= payment.amount %>
+  Paid in: <%= display_boolean(payment.paid_in) %>
+  Paid out: <%= display_boolean(payment.paid_out) %>
+  <% if @game.user == current_user %>
+    <%= turbo_frame_tag(payment, :edit) do %>
+      <%= link_to "Edit", edit_payment_path(payment) %>
+    <% end %>
+  <% end %>
+</p>

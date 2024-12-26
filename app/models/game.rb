@@ -3,14 +3,23 @@ class Game < ApplicationRecord
   has_many :headers, dependent: :destroy
   has_many :squares, dependent: :destroy
   has_many :users, through: :squares
+  has_many :payments, dependent: :destroy
 
   validates :square_price, presence: true, numericality: { greater_than: 0 }
 
   before_create :create_share_code
   after_create :create_squares
 
-  def axis_headers(axis)
-    headers.where(axis: axis)
+  def x_headers
+    headers.where(axis: "x").order(:position)
+  end
+
+  def y_headers
+    headers.where(axis: "y").order(:position)
+  end
+
+  def squares_amount(user)
+    squares.where(user: user).count * square_price
   end
 
   private

@@ -1,16 +1,18 @@
+<%= link_to "Home", root_path %>
+
 <div class="w-full m-auto mt-12 lg:w-10/12">
   <div class="grid grid-cols-11 gap-1">
     <div class="text-white bg-green-700 square">
       <%= render "toggle_lock", game: @game %>
     </div>
-    <% @game.axis_headers("x").sort_by(&:position).each do |header| %>
+    <% @game.x_headers.sort_by(&:position).each do |header| %>
       <div class="square">
-        <%= header.position %>
+        <%= header.value %>
       </div>
     <% end %>
-    <% @game.axis_headers("y").sort_by(&:position).each do |header| %>
+    <% @game.y_headers.sort_by(&:position).each do |header| %>
       <div class="square">
-        <%= header.position %>
+        <%= header.value %>
       </div>
       <% @game.squares.filter { |square| square.x == header.position }.sort_by(&:y).each do |square| %>
         <%= turbo_frame_tag(square) do %>
@@ -21,8 +23,10 @@
   </div>
 </div>
 
-<% @game.users.distinct.each do |user| %>
-  <%= turbo_frame_tag(user) do %>
-    <%= user.name %> $<%= user.squares.length * @game.square_price %>
+<%= turbo_frame_tag :game_payments do %>
+  <% @game.payments.each do |payment| %>
+    <%= turbo_frame_tag(payment) do %>
+      <%= render payment, game: @game %>
+    <% end %>
   <% end %>
 <% end %>

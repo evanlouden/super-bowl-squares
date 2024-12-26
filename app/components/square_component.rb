@@ -8,6 +8,7 @@ class SquareComponent < ViewComponent::Base
   private
   attr_reader :square
   delegate :game, :user, to: :square
+  delegate :turbo_frame_tag, to: :helpers
 
   def class_list
     list = %w[flex items-center justify-center h-12 text-center border rounded border-neutral-900]

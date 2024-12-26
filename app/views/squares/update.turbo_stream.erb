@@ -4,6 +4,14 @@
   <% end %>
 <% end %>
 
-<%= turbo_stream.update(current_user) do %>
-  <%= current_user.name %> $<%= current_user.squares.length * @square.game.square_price %>
+<% if @new_payment %>
+  <%= turbo_stream.append(:game_payments) do %>
+    <%= turbo_frame_tag(@payment) do %>
+      <%= render(@payment) %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.update(@payment) do %>
+    <%= render(@payment) %>
+  <% end %>
 <% end %>

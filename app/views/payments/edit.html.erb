@@ -1,0 +1,7 @@
+<%= turbo_frame_tag(@payment, :edit) do %>
+  <%= form_with(model: @payment) do |f| %>
+    <%= f.check_box :paid_in %>
+    <%= f.check_box :paid_out %>
+    <%= f.submit "Update", class: "rounded-md bg-blue-500 text-white px-4 py-2" %>
+  <% end %>
+<% end %>
