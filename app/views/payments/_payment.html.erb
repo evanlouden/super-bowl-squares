@@ -1,10 +1,17 @@
-<p>
-  <%= payment.user.name %> $<%= payment.amount %>
-  Paid in: <%= display_boolean(payment.paid_in) %>
-  Paid out: <%= display_boolean(payment.paid_out) %>
-  <% if payment.game.user == current_user %>
-    <%= turbo_frame_tag(payment, :edit) do %>
-      <%= link_to "Edit", edit_payment_path(payment) %>
-    <% end %>
-  <% end %>
-</p>
+<div class="flex items-center justify-center row-span-2 sm:row-span-1">
+  <%= payment.user.name %>
+</div>
+<div class="flex items-center justify-center row-span-2 sm:row-span-1">
+  $<%= payment.amount %>
+</div>
+<div class="flex items-center justify-center row-span-2 text-2xl sm:row-span-1">
+  <%= display_boolean(payment.paid_in) %>
+</div>
+<div class="flex items-center justify-center row-span-2 text-2xl sm:row-span-1">
+  <%= display_boolean(payment.paid_out) %>
+</div>
+<% if payment.game.user == current_user %>
+  <%= link_to "Edit", edit_payment_path(payment), class: "text-blue-500 flex items-center justify-center col-span-2 sm:col-span-1" %>
+<% else %>
+  <div class="col-span-2 sm:col-span-1"></div>
+<% end %>

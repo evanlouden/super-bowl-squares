@@ -1,7 +1,14 @@
-<%= turbo_frame_tag(@payment, :edit) do %>
-  <%= form_with(model: @payment) do |f| %>
-    <%= f.check_box :paid_in %>
-    <%= f.check_box :paid_out %>
-    <%= f.submit "Update", class: "rounded-md bg-blue-500 text-white px-4 py-2" %>
+<%= turbo_frame_tag(@payment) do %>
+  <%= form_with(model: @payment, html: { class: "col-span-6 grid grid-cols-6" }) do |f| %>
+    <div class="flex items-center justify-center row-span-2 sm:row-span-1">
+      <%= f.object.user.name %>
+    </div>
+    <div class="flex items-center justify-center row-span-2 text-center sm:row-span-1">
+      $<%= f.object.amount %>
+    </div>
+    <%= f.check_box :paid_in, class: "row-span-2 sm:row-span-1" %>
+    <%= f.check_box :paid_out, class: "row-span-2 sm:row-span-1" %>
+    <%= f.submit "Update", class: "rounded-md bg-blue-500 text-white px-4 py-1 col-span-2 sm:col-span-1 my-1" %>
+    <%= link_to "Cancel", game_path(@payment.game), class: "text-blue-500 flex items-center justify-center col-span-2 sm:col-span-1 my-1" %>
   <% end %>
 <% end %>

@@ -11,7 +11,7 @@ class SquareComponent < ViewComponent::Base
   delegate :turbo_frame_tag, to: :helpers
 
   def class_list
-    list = %w[flex items-center justify-center h-12 text-center border rounded border-neutral-900]
+    list = %w[flex items-center justify-center h-12 text-center border rounded border-neutral-900 truncate]
     list << if user.present?
       %w[bg-white]
     else
