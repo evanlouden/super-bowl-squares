@@ -1,17 +1,51 @@
-<%= link_to "Home", root_path %>
+<div class="flex justify-center">
+  <table class="mb-4 bg-white">
+    <thead>
+      <tr>
+        <th class="w-24"></th>
+        <th class="w-24">1st</th>
+        <th class="w-24">2nd</th>
+        <th class="w-24">3rd</th>
+        <th class="w-24">Final</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-white bg-red-700">Chiefs</td>
+        <td><%= @find_square.x_axis_first_quarter_score %></td>
+        <td><%= @find_square.x_axis_second_quarter_score %></td>
+        <td><%= @find_square.x_axis_third_quarter_score %></td>
+        <td><%= @find_square.x_axis_final_score %></td>
+      </tr>
+      <tr>
+        <td class="text-white bg-indigo-700">Lions</td>
+        <td><%= @find_square.y_axis_first_quarter_score %></td>
+        <td><%= @find_square.y_axis_second_quarter_score %></td>
+        <td><%= @find_square.y_axis_third_quarter_score %></td>
+        <td><%= @find_square.y_axis_final_score %></td>
+      </tr>
+      <tr>
+        <td>Winner</td>
+        <td><%= @find_square.first_quarter_score_square_name %></td>
+        <td><%= @find_square.second_quarter_score_square_name %></td>
+        <td><%= @find_square.third_quarter_score_square_name %></td>
+        <td><%= @find_square.final_score_square_name %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-<div class="w-full m-auto mt-12 lg:w-10/12">
+<div class="w-full m-auto lg:w-10/12">
   <div class="grid grid-cols-11 gap-1">
-    <div class="text-white bg-green-700 square">
-      <%= render "toggle_lock", game: @game %>
+    <div class="bg-transparent border-none square">
     </div>
     <% @game.x_headers.sort_by(&:position).each do |header| %>
-      <div class="square">
+      <div class="text-white bg-red-700 square">
         <%= header.value %>
       </div>
     <% end %>
     <% @game.y_headers.sort_by(&:position).each do |header| %>
-      <div class="square">
+      <div class="text-white bg-indigo-700 square">
         <%= header.value %>
       </div>
       <% @game.squares.filter { |square| square.y == header.position }.sort_by(&:x).each do |square| %>

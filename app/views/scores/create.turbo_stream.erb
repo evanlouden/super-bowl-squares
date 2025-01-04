@@ -1,0 +1,12 @@
+<%= turbo_stream.append(:scores) do %>
+  <div class="grid grid-cols-4 bg-white odd:bg-gray-300">
+    <div class="p-4"><%= @score.x_axis_score %></div>
+    <div class="p-4"><%= @score.y_axis_score %></div>
+    <div class="p-4"><%= @score.quarter %></div>
+    <div class="p-4"><%= @score.final %></div>
+  </div>
+<% end %>
+
+<%= turbo_stream.update "new_score" do %>
+  <%= link_to "New Score", new_score_path, class: "button" %>
+<% end %>

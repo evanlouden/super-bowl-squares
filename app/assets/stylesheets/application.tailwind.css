@@ -6,4 +6,47 @@
   .square {
     @apply flex items-center justify-center h-12 text-center bg-white border rounded border-neutral-900
   }
+
+  .button {
+    @apply bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600
+  }
+
+  .button-red {
+    @apply bg-red-500 hover:bg-red-600
+  }
+
+  .flash {
+    @apply p-2 text-white
+  }
+
+  .notice {
+    @apply bg-green-500
+  }
+
+  .alert {
+    @apply bg-red-500
+  }
+}
+
+.kanit-extrabold-italic {
+  font-family: "Kanit", serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+
+table {
+  @apply rounded-lg bg-white outline outline-1 outline-gray-300
+}
+
+th {
+  @apply border-b-2 border-double border-gray-500 rounded-t-lg
+}
+
+tr {
+  @apply border-b border-gray-300 last:border-b-0 last:rounded-b-lg
+}
+
+th, td {
+  @apply p-2 border-r border-gray-300 last:border-r-0 text-center
 }

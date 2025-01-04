@@ -1,0 +1,21 @@
+<div class="mx-auto md:w-1/2">
+  <div class="grid grid-cols-4 text-white bg-blue-500">
+    <div class="p-4"><%= Score::X_AXIS_TEAM_NAME %></div>
+    <div class="p-4"><%= Score::Y_AXIS_TEAM_NAME %></div>
+    <div class="p-4">Quarter</div>
+    <div class="p-4">Final</div>
+  </div>
+  <%= turbo_frame_tag(:scores) do %>
+    <% @scores.each do |score| %>
+      <div class="grid grid-cols-4 bg-white odd:bg-gray-300">
+        <div class="p-4"><%= score.x_axis_score %></div>
+        <div class="p-4"><%= score.y_axis_score %></div>
+        <div class="p-4"><%= score.quarter %></div>
+        <div class="p-4"><%= score.final %></div>
+      </div>
+    <% end %>
+  <% end %>
+  <%= turbo_frame_tag "new_score" do %>
+    <%= link_to "New Score", new_score_path, class: "button" %>
+  <% end %>
+</div>

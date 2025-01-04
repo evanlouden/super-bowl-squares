@@ -2,10 +2,11 @@ Rails.application.routes.draw do
   root "home#index"
   devise_for :users
 
-  resources :find_games, only: [:new, :create]
+  resources :find_games, only: [:new, :index]
   resources :games, only: [:show, :new, :create, :destroy]
   resources :headers
   resources :payments, only: [:edit, :update]
+  resources :scores
   resources :squares, only: [:update]
   resources :users
 

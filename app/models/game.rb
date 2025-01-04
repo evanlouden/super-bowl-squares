@@ -5,7 +5,7 @@ class Game < ApplicationRecord
   has_many :users, through: :squares
   has_many :payments, dependent: :destroy
 
-  validates :square_price, presence: true, numericality: { greater_than: 0 }
+  validates :square_price, presence: true
 
   before_create :create_share_code
 
@@ -19,10 +19,6 @@ class Game < ApplicationRecord
 
   def squares_amount(user)
     squares.where(user: user).count * square_price
-  end
-
-  def find_square(x:, y:)
-    Services::FindSquare.new(game: self, x_number: x, y_number: y).call
   end
 
   private

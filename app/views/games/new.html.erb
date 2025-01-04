@@ -1,11 +1,22 @@
-<h1>New game</h1>
-
-<%= form_for @game do |f| %>
-  <%= f.label :square_price %>
-  <%= f.number_field :square_price %>
-  <%= f.submit "Create Game", class: "rounded-md bg-blue-500 text-white px-4 py-2" %>
+<%= turbo_frame_tag :user_show_form do %>
+  <%= link_to "X", user_path(current_user), class: "flex flex-row-reverse px-2 text-gray-700 text-right" %>
+  <%= form_for @game do |f| %>
+    <% if @game.errors.any? %>
+      <div class="text-center text-red-500">
+        <% @game.errors.full_messages.each do |message| %>
+          <%= message %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="mb-4">
+      <%= f.label :square_price, class: "block text-sm text-gray-700 font-medium" %>
+      <div class="flex flex-row items-center">
+        <span class="mr-2 text-xl text-gray-700">$</span>
+        <%= f.number_field :square_price, class: "w-full mt-1 px-3 py-2 leading-tight text-gray-700 border border-none rounded shadow appearance-none bg-gray-100 focus:outline-none focus:ring focus:ring-blue-500" %>
+      </div>
+    </div>
+    <div class="mb-4">
+      <%= f.submit "Create Game", class: "button" %>
+    </div>
+  <% end %>
 <% end %>
-
-<div>
-  <%= link_to "Back to games", games_path %>
-</div>

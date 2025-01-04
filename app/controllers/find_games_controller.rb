@@ -3,17 +3,13 @@ class FindGamesController < ApplicationController
     @form = Forms::FindGameForm.new
   end
 
-  def create
+  def index
     @form = Forms::FindGameForm.new(form_params)
 
-
     if @form.valid?
-      redirect_to game_path(@form.game)
+      render turbo_stream: turbo_stream.action(:redirect, game_path(@form.game))
     else
-      render turbo_stream: turbo_stream.replace(
-        "find_game",
-        partial: "find_games/form"
-      )
+      render :new, status: :unprocessable_entity
     end
   end
 

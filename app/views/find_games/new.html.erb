@@ -1,3 +1,20 @@
-<%= turbo_frame_tag "find_game", target: "_top" do %>
-  <%= render "form" %>
+<%= turbo_frame_tag :user_show_form do %>
+  <%= link_to "X", user_path(current_user), class: "flex flex-row-reverse px-2 text-gray-700 text-right" %>
+
+  <%= form_with model: @form, url: find_games_path, method: :get, html: { target: "_top" } do |f| %>
+    <% if @form.errors.any? %>
+      <div class="text-center text-red-500">
+        <% @form.errors.full_messages.each do |message| %>
+          <%= message %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="mb-4">
+      <%= f.label "Code", class: "block text-sm text-gray-700 font-medium" %>
+      <%= f.text_field :share_code, class: "w-full mt-1 px-3 py-2 leading-tight text-gray-700 border border-none rounded shadow appearance-none bg-gray-100 focus:outline-none focus:ring focus:ring-blue-500" %>
+    </div>
+    <div class="mb-4">
+      <%= f.submit "Find Game", class: "button" %>
+    </div>
+  <% end %>
 <% end %>

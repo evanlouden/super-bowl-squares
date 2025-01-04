@@ -6,17 +6,16 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <%= hotwire_livereload_tags if Rails.env.development? %>
   </head>
 
-  <%# <body class="min-h-screen bg-gradient-to-b from-red-700 to-indigo-700"> %>
-  <body class="bg-slate-400">
-    <div class="mb-4">
-      <p class="p-2 text-white bg-green-500"><%= notice %></p>
-      <p class="p-2 text-white bg-red-500"><%= alert %></p>
-    </div>
+  <body class="min-h-screen pt-4 bg-gradient-to-b from-red-700 to-indigo-700">
     <%= yield %>
   </body>
 </html>

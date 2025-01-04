@@ -1,1 +1,15 @@
-<%= link_to "Sign in", new_user_session_path, class: "rounded-md bg-blue-500 text-white px-4 py-2" %>
+<div class="container mx-auto">
+  <div class="flex flex-col items-center justify-center h-screen">
+    <div class="my-4">
+      <h1 class="text-4xl text-white kanit-extrabold-italic">Super Bowl Squares</h1>
+    </div>
+    <%= turbo_frame_tag :login, class: "flex flex-col items-center justify-center" do %>
+      <div class="my-4">
+        <%= link_to "Log in", new_user_session_path, class: "button" %>
+      </div>
+      <div class="my-4">
+        <%= link_to "Sign up", new_user_registration_path, class: "button" %>
+      </div>
+    <% end %>
+  </div>
+</div>

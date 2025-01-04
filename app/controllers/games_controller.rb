@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   def show
     @game = Game.includes(:headers, :squares).find(params[:id])
+    @find_square = Services::FindSquare.new(@game)
   end
 
   def new
@@ -11,13 +12,11 @@ class GamesController < ApplicationController
   def create
     @game = current_user.games.new(game_params)
 
-    respond_to do |format|
-      if @game.save
-        Services::CreateSquares.new(@game).call
-        format.html { redirect_to game_url(@game), notice: "Game was successfully created." }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @game.save
+      Services::CreateSquares.new(@game).call
+      render turbo_stream: turbo_stream.action(:redirect, game_path(@game))
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 

@@ -8,7 +8,7 @@ class Forms::FindGameForm
   validate :valid_share_code
 
   def game
-    Game.find_by(share_code: normalized_share_code)
+    @game ||= Game.find_by(share_code: normalized_share_code)
   end
 
   def valid_share_code

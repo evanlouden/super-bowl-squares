@@ -1,0 +1,7 @@
+<%= form_for score, html: { class: "bg-white grid grid-cols-5 mt-4" } do |f| %>
+  <%= f.number_field :x_axis_score, class: "p-4" %>
+  <%= f.number_field :y_axis_score, class: "p-4" %>
+  <%= f.select :quarter, Score::QUARTERS, class: "p-4" %>
+  <%= f.check_box :final, class: "p-4" %>
+  <%= f.submit "Create", class: "button" %>
+<% end %>

@@ -1,18 +1,20 @@
-<%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "rounded-md bg-red-500 text-white px-4 py-2" %>
+<div class="container max-w-md p-4 mx-auto bg-white border rounded shadow-md">
+  <div class="mb-4">
+    <h2 class="flex justify-center text-2xl font-bold">Games</h2>
+    <% @user.all_games.each do |game| %>
+      <%= link_to game_path(game) do %>
+        <div class="flex justify-between p-2 border-b border-neutral-900">
+          <%= game.share_code %> - <%= game.user.name %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 
-<h2>Games</h2>
-<% @user.games.each do |game| %>
-  <%= link_to game.share_code, game_path(game) %>
-<% end %>
-
-<h2>Squares Games</h2>
-
-<% @user.squares_games.each do |game| %>
-  <%= link_to game.share_code, game_path(game) %>
-<% end %>
-
-<%= link_to "New Game", new_game_path, class: "rounded-md bg-blue-500 text-white px-4 py-2" %>
-
-<%= turbo_frame_tag "find_game" do %>
-  <%= link_to "Find Game", new_find_game_path %>
-<% end %>
+  <%= turbo_frame_tag :user_show_form do %>
+    <div class="grid grid-cols-3 gap-2">
+      <%= button_to "Create Game", new_game_path, method: :get, class: "button w-full" %>
+      <%= button_to "Find Game", new_find_game_path, method: :get, class: "button w-full" %>
+      <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "button button-red w-full", data: { turbo: false } %>
+    </div>
+  <% end %>
+</div>

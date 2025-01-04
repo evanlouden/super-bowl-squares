@@ -2,7 +2,6 @@
   <% if locked? %>
     <%= name %>
   <% else %>
-    <%= square.id %>
     <%= button_to(square, method: :put, class: "w-full h-full", form_class: "w-full h-full") do %>
       <%= name %>
     <% end %>

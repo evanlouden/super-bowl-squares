@@ -1,7 +1,5 @@
-<%= turbo_stream.replace(@square) do %>
-  <%= turbo_frame_tag(@square) do %>
-    <%= render(SquareComponent.new(@square)) %>
-  <% end %>
+<%= turbo_stream.update(@square) do %>
+  <%= render(SquareComponent.new(@square)) %>
 <% end %>
 
 <% if @new_payment %>
