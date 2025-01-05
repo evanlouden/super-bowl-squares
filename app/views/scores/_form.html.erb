@@ -1,7 +1,33 @@
-<%= form_for score, html: { class: "bg-white grid grid-cols-5 mt-4" } do |f| %>
-  <%= f.number_field :x_axis_score, class: "p-4" %>
-  <%= f.number_field :y_axis_score, class: "p-4" %>
-  <%= f.select :quarter, Score::QUARTERS, class: "p-4" %>
-  <%= f.check_box :final, class: "p-4" %>
-  <%= f.submit "Create", class: "button" %>
-<% end %>
+<div class="relative w-full max-w-sm px-8 pt-6 pb-8 mx-auto mt-4 mb-4 bg-white border rounded shadow-md">
+    <%= link_to "X", scores_path, class: "absolute top-2 right-2 text-gray-700" %>
+    <%= form_for score do |f| %>
+      <div class="mb-4">
+        <%= f.label "Chiefs", class: "block text-sm text-gray-700 font-medium" %>
+        <%= f.number_field :x_axis_score,
+          type: :tel,
+          class: "w-full mt-1 px-3 py-2 leading-tight text-gray-700 border border-none rounded shadow appearance-none bg-gray-100 focus:outline-none focus:ring focus:ring-blue-500" %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label "Lions", class: "block text-sm text-gray-700 font-medium" %>
+        <%= f.number_field :y_axis_score,
+          type: :tel,
+          class: "w-full mt-1 px-3 py-2 leading-tight text-gray-700 border border-none rounded shadow appearance-none bg-gray-100 focus:outline-none focus:ring focus:ring-blue-500"  %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :quarter, class: "block text-sm text-gray-700 font-medium" %>
+        <%= f.select :quarter, Score::QUARTERS.map { |quarter| [quarter.humanize, quarter] },
+          class: "block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0" %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.check_box :final %>
+        <%= f.label :final %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.submit "Create", class: "button" %>
+      </div>
+    <% end %>
+  </div>

@@ -4,7 +4,7 @@
 
 <% if @new_payment %>
   <%= turbo_stream.append(:game_payments) do %>
-    <%= turbo_frame_tag(@payment) do %>
+    <%= turbo_frame_tag(@payment, class: "grid grid-cols-6 gap-1 px-4 py-6 border-b border-gray-200 last:border-b-0") do %>
       <%= render(@payment) %>
     <% end %>
   <% end %>

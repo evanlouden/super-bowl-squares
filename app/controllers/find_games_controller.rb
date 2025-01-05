@@ -7,7 +7,7 @@ class FindGamesController < ApplicationController
     @form = Forms::FindGameForm.new(form_params)
 
     if @form.valid?
-      render turbo_stream: turbo_stream.action(:redirect, game_path(@form.game))
+      render turbo_stream: turbo_stream.action(:redirect, game_path(@form.game.share_code))
     else
       render :new, status: :unprocessable_entity
     end

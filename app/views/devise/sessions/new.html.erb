@@ -1,8 +1,14 @@
 <%= turbo_frame_tag :login do %>
   <div class="relative w-full max-w-sm px-8 pt-6 pb-8 mx-auto mt-4 mb-4 bg-white border rounded shadow-md">
     <%= link_to "X", root_path, class: "absolute top-2 right-2 text-gray-700" %>
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { data: { turbo: false } }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
+      <% flash.each do |type, message| %>
+        <div class="p-4 mb-4 text-red-700 bg-red-100 border border-red-400 rounded">
+          <%= message %>
+        </div>
+      <% end %>
       <div class="mb-4">
         <%= f.label :email, class: "block text-sm text-gray-700 font-medium" %>
         <%= f.email_field :email,

@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   def show
-    @game = Game.includes(:headers, :squares).find(params[:id])
+    @game = Game.includes(:headers, :squares).find_by!(share_code: params[:id].upcase)
     @find_square = Services::FindSquare.new(@game)
   end
 
@@ -14,21 +14,19 @@ class GamesController < ApplicationController
 
     if @game.save
       Services::CreateSquares.new(@game).call
-      render turbo_stream: turbo_stream.action(:redirect, game_path(@game))
+      Services::AssignNumbers.new(@game).call
+      render turbo_stream: turbo_stream.action(:redirect, game_path(@game.share_code))
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @game = Game.find(params[:id])
-    return if @game.user != current_user
+    @game = current_user.games.find_by!(share_code: params[:id])
 
     @game.destroy!
-    respond_to do |format|
-      format.html { redirect_to games_url, notice: "Game was successfully destroyed." }
-      format.json { head :no_content }
-    end
+
+    render turbo_stream: turbo_stream.action(:redirect, user_path(current_user))
   end
 
   private

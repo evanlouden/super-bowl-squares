@@ -2,55 +2,59 @@
   <p>Please rotate your device to landscape mode for a better experience.</p>
 </div>
 
-<div class="flex justify-center">
-  <table class="mb-4 bg-white">
-    <thead>
-      <tr>
-        <th class="w-24"></th>
-        <th class="w-24">1st</th>
-        <th class="w-24">2nd</th>
-        <th class="w-24">3rd</th>
-        <th class="w-24">Final</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="text-white bg-red-700">Chiefs</td>
-        <td><%= @find_square.x_axis_first_quarter_score %></td>
-        <td><%= @find_square.x_axis_second_quarter_score %></td>
-        <td><%= @find_square.x_axis_third_quarter_score %></td>
-        <td><%= @find_square.x_axis_final_score %></td>
-      </tr>
-      <tr>
-        <td class="text-white bg-indigo-700">Lions</td>
-        <td><%= @find_square.y_axis_first_quarter_score %></td>
-        <td><%= @find_square.y_axis_second_quarter_score %></td>
-        <td><%= @find_square.y_axis_third_quarter_score %></td>
-        <td><%= @find_square.y_axis_final_score %></td>
-      </tr>
-      <tr>
-        <td>Winner</td>
-        <td><%= @find_square.first_quarter_score_square_name %></td>
-        <td><%= @find_square.second_quarter_score_square_name %></td>
-        <td><%= @find_square.third_quarter_score_square_name %></td>
-        <td><%= @find_square.final_score_square_name %></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<%= link_to "Home", user_path(current_user), class: "button ml-2" %>
+
+<% if @game.locked? %>
+  <div class="grid w-3/4 grid-cols-5 mx-auto mb-4 text-center bg-white rounded-lg">
+    <div class="p-2 border-b border-r border-gray-300"><%= @game.share_code %></div>
+    <div class="p-2 border-b border-r border-gray-300">1st</div>
+    <div class="p-2 border-b border-r border-gray-300">2nd</div>
+    <div class="p-2 border-b border-r border-gray-300">3rd</div>
+    <div class="p-2 border-b border-gray-300">Final</div>
+
+    <div class="p-2 text-white bg-x-axis border-b border-l border-r border-gray-300">Chiefs</div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.x_axis_first_quarter_score %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.x_axis_second_quarter_score %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.x_axis_third_quarter_score %></div>
+    <div class="p-2 border-b border-gray-300"><%= @find_square.x_axis_final_score %></div>
+
+    <div class="p-2 text-white bg-y-axis border-b border-l border-r border-gray-300">Lions</div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.y_axis_first_quarter_score %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.y_axis_second_quarter_score %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.y_axis_third_quarter_score %></div>
+    <div class="p-2 border-b border-gray-300"><%= @find_square.y_axis_final_score %></div>
+
+    <div class="p-2 border-r border-gray-300">Winner</div>
+    <div class="p-2 border-r border-gray-300"><%= @find_square.first_quarter_score_square_name %></div>
+    <div class="p-2 border-r border-gray-300"><%= @find_square.second_quarter_score_square_name %></div>
+    <div class="p-2 border-r border-gray-300"><%= @find_square.third_quarter_score_square_name %></div>
+    <div class="p-2"><%= @find_square.final_score_square_name %></div>
+  </div>
+<% else %>
+  <div class="flex justify-center mb-4">
+    <%= button_to "Lock Game and Assign Numbers", lock_game_path(@game.share_code), method: :patch, class: "button button-red border border-white", onclick: "return confirm('Lock this game?');"   %>
+  </div>
+<% end %>
+
 
 <div class="w-full m-auto mb-4 lg:w-10/12">
   <div class="grid grid-cols-11 gap-1">
-    <div class="bg-transparent border-none square">
-    </div>
+    <% if @game.locked? && @game.user == current_user %>
+      <div class="bg-yellow-500 square">
+        <%= button_to "Unlock Game", lock_game_path(@game.share_code), method: :patch, class: "text-sm" %>
+      </div>
+    <% else %>
+      <div class="bg-transparent border-none square">
+      </div>
+    <% end %>
     <% @game.x_headers.sort_by(&:position).each do |header| %>
-      <div class="text-white bg-red-700 square">
-        <%= header.value %>
+      <div class="text-white bg-x-axis square">
+        <%= header.value if @game.locked? %>
       </div>
     <% end %>
     <% @game.y_headers.sort_by(&:position).each do |header| %>
-      <div class="text-white bg-indigo-700 square">
-        <%= header.value %>
+      <div class="text-white bg-y-axis square">
+        <%= header.value if @game.locked? %>
       </div>
       <% @game.squares.filter { |square| square.y == header.position }.sort_by(&:x).each do |square| %>
         <%= turbo_frame_tag(square) do %>
@@ -62,8 +66,16 @@
 </div>
 
 <%= turbo_frame_tag(:game_payments, class: "flex flex-col bg-white rounded-lg w-full sm:w-3/4 sm:mx-auto mx-2") do %>
+  <% if @game.payments.any? %>
+    <div class="grid grid-cols-6 gap-1 px-4 py-2 border-b border-gray-200 border-double">
+      <div class="col-span-2"></div>
+      <div class="text-center">Paid in</div>
+      <div class="text-center">Paid out</div>
+      <div class="col-span-2"></div>
+    </div>
+  <% end %>
   <% @game.payments.each do |payment| %>
-    <%= turbo_frame_tag(payment, class: "grid grid-cols-6 gap-1 px-4 py-6 border-b border-gray-200 last:border-b-0") do %>
+    <%= turbo_frame_tag(payment, class: "grid grid-cols-6 gap-1 px-4 py-6 border-b border-gray-200 last:border-b-0 even:bg-gray-200 last:rounded-b-lg") do %>
       <%= render payment, game: @game %>
     <% end %>
   <% end %>

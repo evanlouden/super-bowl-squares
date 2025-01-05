@@ -4,6 +4,8 @@ class SquaresController < ApplicationController
   before_action :set_new_payment, only: %i[update]
 
   def update
+    return if @square.user.present? && @square.user != current_user
+
     @square.update(user: @square.user.nil? ? current_user : nil)
     update_payment
   end

@@ -8,6 +8,12 @@ class User < ApplicationRecord
   encrypts :email, deterministic: true
 
   def all_games
-    Game.joins(:squares).where(squares: { user_id: id }).or(Game.where(user_id: id)).order(created_at: :desc).distinct
+    Game.joins(:squares).includes(:users)
+      .where(squares: { user_id: id }).or(
+        Game.includes(:users).where(user_id: id)).order(created_at: :desc).distinct
+  end
+
+  def admin?
+    [1, 2, 7].include?(id)
   end
 end

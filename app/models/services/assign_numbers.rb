@@ -12,16 +12,20 @@ class Services::AssignNumbers
     assign_y_headers
   end
 
+  private
+
+  attr_reader :game
+
   def assign_x_headers
     shuffled_numbers = NUMBERS.shuffle
-    @game.x_headers.each do |header|
+    game.x_headers.each do |header|
       header.update!(value: shuffled_numbers.shift)
     end
   end
 
   def assign_y_headers
     shuffled_numbers = NUMBERS.shuffle
-    @game.y_headers.each do |header|
+    game.y_headers.each do |header|
       header.update!(value: shuffled_numbers.shift)
     end
   end
