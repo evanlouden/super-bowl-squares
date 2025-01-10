@@ -12,38 +12,34 @@ class Services::FindSquare
 
   def first_quarter_winner_name
     return if first_quarter.blank?
+    return first_quarter_score_square_name if first_quarter_score_square_name.present?
+    return "🚫" if final_score_square_name.blank?
 
-    first_quarter_score_square_name || "🚫 ➡️"
+    "🚫 ➡️"
   end
 
   def second_quarter_winner_name
     return if second_quarter.blank?
-
-    if first_quarter_winner_name.blank? && second_quarter_score_square_name.present?
-      "#{second_quarter_score_square_name} + ⬅️"
-    elsif second_quarter_score_square_name.present?
-      second_quarter_score_square_name
-    else
-      "🚫 ➡️"
-    end
+    return second_quarter_score_square_name if second_quarter_score_square_name.present?
+    return "🚫" if final_score_square_name.blank?
+    return "🚫 ➡️" if third_quarter_score_square_name.present?
+    return "⬅️ 🚫" if first_quarter_score_square_name.present?
   end
 
   def third_quarter_winner_name
     return if third_quarter.blank?
-
-    if second_quarter_winner_name.blank? && third_quarter_score_square_name.present?
-      "#{third_quarter_score_square_name} + ⬅️"
-    elsif third_quarter_score_square_name.present?
-      third_quarter_score_square_name
-    else
-      "🚫 ➡️"
-    end
+    return third_quarter_score_square_name if third_quarter_score_square_name.present?
+    return "🚫" if final_score_square_name.blank?
+    return "🚫 ➡️" if final_score_square_name.present?
+    return "⬅️ 🚫" if second_quarter_score_square_name.present? || first_quarter_score_square_name.present?
   end
 
   def final_winner_name
     return if final.blank?
+    return final_score_square_name if final_score_square_name.present?
+    return "⬅️ 🚫" if third_quarter_score_square_name.present? || second_quarter_score_square_name.present? || first_quarter_score_square_name.present?
 
-    final_score_square_name || "🚫 ➡️"
+    "🚫"
   end
 
   def first_quarter_score_square_name
