@@ -1,0 +1,7 @@
+<%= turbo_stream.update @score do %>
+  <%= render "score", score: @score %>
+<% end %>
+
+<%= turbo_stream.update(:score_form) do %>
+  <%= link_to "New Score", new_score_path, class: "button" %>
+<% end %>

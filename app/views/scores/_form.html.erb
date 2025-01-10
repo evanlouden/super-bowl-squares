@@ -27,7 +27,7 @@
       </div>
 
       <div class="mb-4">
-        <%= f.submit "Create", class: "button" %>
+        <%= f.submit f.object.persisted? ? "Update" : "Create", class: "button" %>
       </div>
     <% end %>
   </div>

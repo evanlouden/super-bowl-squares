@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :find_games, only: [:new, :index]
   resources :games, only: [:show, :new, :create, :destroy]
   resources :headers
-  resources :lock_games, only: [:update]
+  resources :lock_games
   resources :payments, only: [:edit, :update]
   resources :scores
   resources :squares, only: [:update]

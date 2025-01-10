@@ -11,6 +11,6 @@ class  LockGamesController < ApplicationController
   private
 
   def set_game
-    @game = current_user.games.find(params[:id])
+    @game = current_user.games.find_by!(share_code: params[:id])
   end
 end

@@ -7,6 +7,15 @@ class ScoresController < ApplicationController
     @scores = Score.all.order(:created_at)
   end
 
+  def edit
+    @score = Score.find(params[:id])
+  end
+
+  def update
+    @score = Score.find(params[:id])
+    @score.update(score_params)
+  end
+
   def new
     @score = Score.new(previous_score_params)
   end

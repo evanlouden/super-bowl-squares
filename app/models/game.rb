@@ -18,10 +18,34 @@ class Game < ApplicationRecord
   end
 
   def squares_amount(user)
-    squares.where(user: user).count * square_price
+    squares.where(user: user).size * square_price
+  end
+
+  def first_quarter_payout
+    0.20
+  end
+
+  def second_quarter_payout
+    0.20
+  end
+
+  def third_quarter_payout
+    0.20
+  end
+
+  def final_payout
+    0.20
+  end
+
+  def total_squares_amount
+    claimed_squares * square_price
   end
 
   private
+
+  def claimed_squares
+    squares.where.not(user: nil).size
+  end
 
   def create_share_code
     self.share_code = ShareCodeGenerator.build

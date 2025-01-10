@@ -8,16 +8,13 @@
     </div>
 
     <% @scores.each do |score| %>
-      <div class="grid grid-cols-4 text-center bg-white border border-gray-300 even:bg-gray-300 last:rounded-b-md">
-        <div class="p-4"><%= score.x_axis_score %></div>
-        <div class="p-4"><%= score.y_axis_score %></div>
-        <div class="p-4"><%= score.quarter %></div>
-        <div class="p-4"><%= score.final %></div>
-      </div>
+      <%= turbo_frame_tag(score, target: :score_form, class: "grid grid-cols-4 text-center bg-white border border-gray-300 even:bg-gray-300 last:rounded-b-md") do %>
+        <%= render score %>
+      <% end %>
     <% end %>
   <% end %>
   <div class="flex justify-center mt-4">
-    <%= turbo_frame_tag("new_score") do %>
+    <%= turbo_frame_tag(:score_form) do %>
       <%= link_to "New Score", new_score_path, class: "button" %>
     <% end %>
   </div>
