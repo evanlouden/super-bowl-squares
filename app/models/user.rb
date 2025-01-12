@@ -14,6 +14,6 @@ class User < ApplicationRecord
   end
 
   def admin?
-    [1, 2, 7].include?(id)
+    [1, 2].include?(id)
   end
 end

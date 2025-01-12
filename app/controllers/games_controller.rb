@@ -5,7 +5,7 @@ class GamesController < ApplicationController
   end
 
   def new
-    @game = Game.new
+    @game = Game.new(first_quarter_payout: 20, second_quarter_payout: 20, third_quarter_payout: 20, final_payout: 40)
   end
 
 
@@ -32,6 +32,6 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:square_price)
+    params.require(:game).permit(:square_price, :first_quarter_payout, :second_quarter_payout, :third_quarter_payout, :final_payout)
   end
 end

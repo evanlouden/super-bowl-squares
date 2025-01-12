@@ -13,8 +13,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'x-axis': '#E31837',
-        'y-axis': '#0076b6',
+        'x-axis': '#00338D',
+        'y-axis': '#FB4F14',
       },
     },
   },

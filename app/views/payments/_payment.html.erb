@@ -8,6 +8,9 @@
   <%= display_boolean(payment.paid_in) %>
 </div>
 <div class="flex items-center justify-center row-span-2 text-2xl sm:row-span-1">
+
+</div>
+<div class="flex items-center justify-center row-span-2 text-2xl sm:row-span-1">
   <%= display_boolean(payment.paid_out) %>
 </div>
 <% if payment.game.user == current_user %>

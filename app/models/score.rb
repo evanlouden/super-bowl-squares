@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Score < ApplicationRecord
-  X_AXIS_TEAM_NAME = "Chiefs"
-  Y_AXIS_TEAM_NAME = "Lions"
+  X_AXIS_TEAM_NAME = "Bills"
+  Y_AXIS_TEAM_NAME = "Broncos"
 
   QUARTERS = %w[first second third fourth].freeze
 
@@ -22,6 +22,6 @@ class Score < ApplicationRecord
   end
 
   def self.final
-    where(quarter: :final).last_by(:updated_at)
+    where(quarter: :fourth).last_by(:updated_at)
   end
 end

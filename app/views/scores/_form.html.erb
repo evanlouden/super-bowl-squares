@@ -1,15 +1,19 @@
 <div class="relative w-full max-w-sm px-8 pt-6 pb-8 mx-auto mt-4 mb-4 bg-white border rounded shadow-md">
-    <%= link_to "X", scores_path, class: "absolute top-2 right-2 text-gray-700" %>
+    <%= link_to scores_path, class: "absolute top-2 right-2 text-gray-700" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    <% end %>
     <%= form_for score do |f| %>
       <div class="mb-4">
-        <%= f.label "Chiefs", class: "block text-sm text-gray-700 font-medium" %>
+        <%= f.label Score::X_AXIS_TEAM_NAME, class: "block text-sm text-gray-700 font-medium" %>
         <%= f.number_field :x_axis_score,
           type: :tel,
           class: "w-full mt-1 px-3 py-2 leading-tight text-gray-700 border border-none rounded shadow appearance-none bg-gray-100 focus:outline-none focus:ring focus:ring-blue-500" %>
       </div>
 
       <div class="mb-4">
-        <%= f.label "Lions", class: "block text-sm text-gray-700 font-medium" %>
+        <%= f.label Score::Y_AXIS_TEAM_NAME, class: "block text-sm text-gray-700 font-medium" %>
         <%= f.number_field :y_axis_score,
           type: :tel,
           class: "w-full mt-1 px-3 py-2 leading-tight text-gray-700 border border-none rounded shadow appearance-none bg-gray-100 focus:outline-none focus:ring focus:ring-blue-500"  %>
@@ -17,17 +21,14 @@
 
       <div class="mb-4">
         <%= f.label :quarter, class: "block text-sm text-gray-700 font-medium" %>
-        <%= f.select :quarter, Score::QUARTERS.map { |quarter| [quarter.humanize, quarter] },
-          class: "block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0" %>
+        <%= f.select :quarter,
+          Score::QUARTERS.map { |quarter| [quarter.humanize, quarter] },
+          {},
+          class: "text-black block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0" %>
       </div>
 
       <div class="mb-4">
-        <%= f.check_box :final %>
-        <%= f.label :final %>
-      </div>
-
-      <div class="mb-4">
-        <%= f.submit f.object.persisted? ? "Update" : "Create", class: "button" %>
+        <%= f.submit f.object.persisted? ? "Update" : "Create", class: "button w-full" %>
       </div>
     <% end %>
   </div>

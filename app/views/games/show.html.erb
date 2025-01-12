@@ -2,23 +2,33 @@
   <p>Please rotate your device to landscape mode for a better experience.</p>
 </div>
 
-<%= link_to "Home", user_path(current_user), class: "button ml-2" %>
+
+<div class="flex items-center ml-4 text-white">
+  <%= link_to user_path(current_user) do %>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+    </svg>
+  <% end %>
+  <% if current_user.admin? %>
+    <%= link_to "Scores", scores_path, class: "text-white ml-4", data: { target: "_top" } %>
+  <% end %>
+</div>
 
 <% if @game.locked? %>
   <div class="grid w-3/4 grid-cols-5 mx-auto mb-4 text-center bg-white rounded-lg">
-    <div class="p-2 border-b border-r border-gray-300"><%= @game.share_code %></div>
+    <div class="p-2 border-b border-r border-gray-300"></div>
     <div class="p-2 border-b border-r border-gray-300">1st</div>
     <div class="p-2 border-b border-r border-gray-300">2nd</div>
     <div class="p-2 border-b border-r border-gray-300">3rd</div>
     <div class="p-2 border-b border-gray-300">Final</div>
 
-    <div class="p-2 text-white border-b border-l border-r border-gray-300 bg-x-axis">Chiefs</div>
+    <div class="p-2 text-white border-b border-l border-r border-gray-300 bg-x-axis"><%= Score::X_AXIS_TEAM_NAME %></div>
     <div class="p-2 border-b border-r border-gray-300"><%= @find_square.first_quarter_x_axis_score %></div>
     <div class="p-2 border-b border-r border-gray-300"><%= @find_square.second_quarter_x_axis_score %></div>
     <div class="p-2 border-b border-r border-gray-300"><%= @find_square.third_quarter_x_axis_score %></div>
     <div class="p-2 border-b border-gray-300"><%= @find_square.final_x_axis_score %></div>
 
-    <div class="p-2 text-white border-b border-l border-r border-gray-300 bg-y-axis">Lions</div>
+    <div class="p-2 text-white border-b border-l border-r border-gray-300 bg-y-axis"><%= Score::Y_AXIS_TEAM_NAME %></div>
     <div class="p-2 border-b border-r border-gray-300"><%= @find_square.first_quarter_y_axis_score %></div>
     <div class="p-2 border-b border-r border-gray-300"><%= @find_square.second_quarter_y_axis_score %></div>
     <div class="p-2 border-b border-r border-gray-300"><%= @find_square.third_quarter_y_axis_score %></div>
@@ -36,7 +46,7 @@
     <div class="p-2 border-r border-gray-300"><%= @find_square.third_quarter_score_square_amount %></div>
     <div class="p-2"><%= @find_square.final_score_square_amount %></div>
   </div>
-<% else %>
+<% elsif @game.user == current_user %>
   <div class="flex justify-center mb-4">
     <%= button_to "Lock Game and Assign Numbers", lock_game_path(@game.share_code), method: :patch, class: "button button-red border border-white", onclick: "return confirm('Lock this game?');"   %>
   </div>
@@ -73,16 +83,24 @@
 
 <%= turbo_frame_tag(:game_payments, class: "flex flex-col bg-white rounded-lg w-full sm:w-3/4 sm:mx-auto mx-2") do %>
   <% if @game.payments.any? %>
-    <div class="grid grid-cols-6 gap-1 px-4 py-2 border-b border-gray-200 border-double">
-      <div class="col-span-2"></div>
+    <div class="grid grid-cols-7 gap-1 px-4 py-2 border-b border-gray-200 border-double">
+      <div class="text-center">Name</div>
+      <div class="text-center">Squares</div>
       <div class="text-center">Paid in</div>
+      <div class="text-center">Winnings</div>
       <div class="text-center">Paid out</div>
       <div class="col-span-2"></div>
     </div>
-  <% end %>
-  <% @game.payments.each do |payment| %>
-    <%= turbo_frame_tag(payment, class: "grid grid-cols-6 gap-1 px-4 py-6 border-b border-gray-200 last:border-b-0 even:bg-gray-200 last:rounded-b-lg") do %>
-      <%= render payment, game: @game %>
+    <% @game.payments.each do |payment| %>
+      <%= turbo_frame_tag(payment, class: "grid grid-cols-7 gap-1 px-4 py-6 border-b border-gray-200 last:border-b-0 even:bg-gray-200") do %>
+        <%= render payment, game: @game %>
+      <% end %>
     <% end %>
+
+    <div class="grid grid-cols-7 gap-1 px-4 py-2 border-b border-gray-200 rounded-b-lg">
+      <div class="font-bold text-center">Total</div>
+      <div class="font-bold text-center">$<%= @game.total_squares_amount %></div>
+      <div class="col-span-2 text-center"></div>
+    </div>
   <% end %>
 <% end %>

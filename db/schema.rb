@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_27_225217) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_10_230333) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_27_225217) do
     t.bigint "user_id", default: 1, null: false
     t.boolean "locked", default: false
     t.integer "square_price", null: false
+    t.integer "first_quarter_payout", null: false
+    t.integer "second_quarter_payout", null: false
+    t.integer "third_quarter_payout", null: false
+    t.integer "final_payout", null: false
     t.index ["user_id"], name: "index_games_on_user_id"
   end
 

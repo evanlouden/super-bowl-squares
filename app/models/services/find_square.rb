@@ -5,7 +5,7 @@ class Services::FindSquare
     @game = game
   end
 
-  delegate :x_axis_score, :y_axis_score, to: :first_quarter, prefix: true
+  delegate :x_axis_score, :y_axis_score, to: :first_quarter, prefix: true, allow_nil: true
   delegate :x_axis_score, :y_axis_score, to: :second_quarter, prefix: true, allow_nil: true
   delegate :x_axis_score, :y_axis_score, to: :third_quarter, prefix: true, allow_nil: true
   delegate :x_axis_score, :y_axis_score, to: :final, prefix: true, allow_nil: true
@@ -81,25 +81,25 @@ class Services::FindSquare
   def first_quarter_score_square_amount
     return if first_quarter.blank?
 
-    "$#{game.first_quarter_payout * game.total_squares_amount}"
+    "$#{(game.first_quarter_payout * 0.01 * game.total_squares_amount).to_i}"
   end
 
   def second_quarter_score_square_amount
     return if second_quarter.blank?
 
-    "$#{game.second_quarter_payout * game.total_squares_amount}"
+    "$#{(game.second_quarter_payout * 0.01 * game.total_squares_amount).to_i}"
   end
 
   def third_quarter_score_square_amount
     return if third_quarter.blank?
 
-    "$#{game.third_quarter_payout * game.total_squares_amount}"
+    "$#{(game.third_quarter_payout * 0.01 * game.total_squares_amount).to_i}"
   end
 
   def final_score_square_amount
     return if final.blank?
 
-    "$#{game.final_payout * game.total_squares_amount}"
+    "$#{(game.final_payout * 0.01 * game.total_squares_amount).to_i}"
   end
 
   private
@@ -115,19 +115,19 @@ class Services::FindSquare
   def second_quarter
     return @second_quarter if defined?(@second_quarter)
 
-    @second_quarter = Score.second_quarter
+    @second_quarter = Score.second_quarter || first_quarter
   end
 
   def third_quarter
     return @third_quarter if defined?(@third_quarter)
 
-    @third_quarter = Score.third_quarter
+    @third_quarter = Score.third_quarter || second_quarter || first_quarter
   end
 
   def final
     return @final if defined?(@final)
 
-    @final = Score.final
+    @final = Score.final || third_quarter || second_quarter || first_quarter
   end
 
   def unlocked?

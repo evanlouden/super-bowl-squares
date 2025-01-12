@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ScoresController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_previous_score, only: [:new]
 
   def index
@@ -26,6 +27,10 @@ class ScoresController < ApplicationController
   end
 
   private
+
+  def authenticate_user!
+    render file: "#{Rails.root}/public/403.html", status: :forbidden unless current_user.admin?
+  end
 
   def score_params
     params.require(:score).permit(:x_axis_score, :y_axis_score, :quarter, :final)
