@@ -8,6 +8,8 @@ class Services::AssignNumbers
   end
 
   def call
+    return if game.headers_assigned?
+
     assign_x_headers
     assign_y_headers
   end

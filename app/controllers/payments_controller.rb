@@ -12,7 +12,7 @@ class PaymentsController < ApplicationController
   private
 
   def set_payment
-    @payment = Payment.find(params[:id])
+    @payment = current_user.payments.find(params[:id])
   end
 
   def payment_params

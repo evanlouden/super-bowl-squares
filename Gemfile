@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.3.6"
+ruby "3.4.1"
 
 gem "cssbundling-rails"
 gem "devise", "~> 4.9"
@@ -32,6 +32,5 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
   gem "hotwire-livereload", "~> 1.3"
 end

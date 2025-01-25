@@ -4,24 +4,16 @@ class Score < ApplicationRecord
   X_AXIS_TEAM_NAME = "Bills"
   Y_AXIS_TEAM_NAME = "Broncos"
 
-  QUARTERS = %w[first second third fourth].freeze
 
   validates :x_axis_score, :y_axis_score, presence: true
-  validates :quarter, presence: true, inclusion: { in: QUARTERS }
+  validates :quarter, presence: true, inclusion: { in: [1, 2, 3, 4] }
 
-  def self.first_quarter
-    where(quarter: :first).last_by(:updated_at)
+  def display_quarter
+    { 1 => "First", 2 => "Second", 3 => "Third", 4 => "Fourth" }[quarter]
   end
 
-  def self.second_quarter
-    where(quarter: :second).last_by(:updated_at)
-  end
-
-  def self.third_quarter
-    where(quarter: :third).last_by(:updated_at)
-  end
-
-  def self.final
-    where(quarter: :fourth).last_by(:updated_at)
+  def self.quarter_scores
+    select("DISTINCT ON (quarter) quarter, x_axis_score, y_axis_score, updated_at")
+    .order("quarter, updated_at DESC")
   end
 end

@@ -3,6 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :games, dependent: :destroy
   has_many :squares
+  has_many :payments, through: :games, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   encrypts :email, deterministic: true

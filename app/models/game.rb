@@ -26,6 +26,10 @@ class Game < ApplicationRecord
     claimed_squares * square_price
   end
 
+  def headers_assigned?
+    headers.any? { |header| header.value.present? }
+  end
+
   private
 
   def payout_sum_must_equal_100

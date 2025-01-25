@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   def show
     @game = Game.includes(:headers, :squares).find_by!(share_code: params[:id].upcase)
-    @find_square = Services::FindSquare.new(@game)
+    @decorated_game = Decorators::GameDecorator.new(@game)
   end
 
   def new

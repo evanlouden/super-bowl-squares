@@ -53,7 +53,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_10_230333) do
   create_table "scores", force: :cascade do |t|
     t.integer "x_axis_score", null: false
     t.integer "y_axis_score", null: false
-    t.string "quarter", null: false
+    t.integer "quarter", null: false
     t.boolean "final", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

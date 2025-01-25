@@ -14,7 +14,7 @@
   <% end %>
 </div>
 
-<% if @game.locked? %>
+<% if @decorated_game.locked? %>
   <div class="grid w-3/4 grid-cols-5 mx-auto mb-4 text-center bg-white rounded-lg">
     <div class="p-2 border-b border-r border-gray-300"></div>
     <div class="p-2 border-b border-r border-gray-300">1st</div>
@@ -23,56 +23,60 @@
     <div class="p-2 border-b border-gray-300">Final</div>
 
     <div class="p-2 text-white border-b border-l border-r border-gray-300 bg-x-axis"><%= Score::X_AXIS_TEAM_NAME %></div>
-    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.first_quarter_x_axis_score %></div>
-    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.second_quarter_x_axis_score %></div>
-    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.third_quarter_x_axis_score %></div>
-    <div class="p-2 border-b border-gray-300"><%= @find_square.final_x_axis_score %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.first_quarter_x_axis_score %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.second_quarter_x_axis_score %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.third_quarter_x_axis_score %></div>
+    <div class="p-2 border-b border-gray-300"><%= @decorated_game.fourth_quarter_x_axis_score %></div>
 
     <div class="p-2 text-white border-b border-l border-r border-gray-300 bg-y-axis"><%= Score::Y_AXIS_TEAM_NAME %></div>
-    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.first_quarter_y_axis_score %></div>
-    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.second_quarter_y_axis_score %></div>
-    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.third_quarter_y_axis_score %></div>
-    <div class="p-2 border-b border-gray-300"><%= @find_square.final_y_axis_score %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.first_quarter_y_axis_score %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.second_quarter_y_axis_score %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.third_quarter_y_axis_score %></div>
+    <div class="p-2 border-b border-gray-300"><%= @decorated_game.fourth_quarter_y_axis_score %></div>
 
     <div class="p-2 border-b border-r border-gray-300">🏆</div>
-    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.first_quarter_winner_name %></div>
-    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.second_quarter_winner_name %></div>
-    <div class="p-2 border-b border-r border-gray-300"><%= @find_square.third_quarter_winner_name %></div>
-    <div class="p-2 border-b border-gray-300"><%= @find_square.final_winner_name %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.first_winner %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.second_winner %></div>
+    <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.third_winner %></div>
+    <div class="p-2 border-b border-gray-300"><%= @decorated_game.fourth_winner %></div>
 
     <div class="p-2 border-r border-gray-300">💰</div>
-    <div class="p-2 border-r border-gray-300"><%= @find_square.first_quarter_score_square_amount %></div>
-    <div class="p-2 border-r border-gray-300"><%= @find_square.second_quarter_score_square_amount %></div>
-    <div class="p-2 border-r border-gray-300"><%= @find_square.third_quarter_score_square_amount %></div>
-    <div class="p-2"><%= @find_square.final_score_square_amount %></div>
+    <div class="p-2 border-r border-gray-300"><%= number_to_currency(@decorated_game.first_amount) %></div>
+    <div class="p-2 border-r border-gray-300"><%= number_to_currency(@decorated_game.second_amount) %></div>
+    <div class="p-2 border-r border-gray-300"><%= number_to_currency(@decorated_game.third_amount) %></div>
+    <div class="p-2"><%= number_to_currency(@decorated_game.fourth_amount) %></div>
   </div>
-<% elsif @game.user == current_user %>
+<% elsif @decorated_game.user == current_user %>
   <div class="flex justify-center mb-4">
-    <%= button_to "Lock Game and Assign Numbers", lock_game_path(@game.share_code), method: :patch, class: "button button-red border border-white", onclick: "return confirm('Lock this game?');"   %>
+    <% if @decorated_game.headers_assigned? %>
+      <%= button_to "Lock Game", lock_game_path(@decorated_game.share_code), method: :patch, class: "button button-red border border-white" %>
+    <% else %>
+      <%= button_to "Lock Game and Assign Numbers", lock_game_path(@decorated_game.share_code), method: :patch, class: "button button-red border border-white", onclick: "return confirm('Lock this game?');" %>
+    <% end %>
   </div>
 <% end %>
 
 
 <div class="w-full m-auto mb-4 lg:w-10/12">
   <div class="grid grid-cols-11 gap-1">
-    <% if @game.locked? && @game.user == current_user %>
+    <% if @decorated_game.locked? && @decorated_game.user == current_user %>
       <div class="bg-yellow-500 square">
-        <%= button_to "Unlock Game", lock_game_path(@game.share_code), action: :update, method: :patch, class: "text-sm" %>
+        <%= button_to "Unlock Game", lock_game_path(@decorated_game.share_code), action: :update, method: :patch, class: "text-sm" %>
       </div>
     <% else %>
       <div class="bg-transparent border-none square">
       </div>
     <% end %>
-    <% @game.x_headers.sort_by(&:position).each do |header| %>
+    <% @decorated_game.x_headers.sort_by(&:position).each do |header| %>
       <div class="text-white bg-x-axis square">
-        <%= header.value if @game.locked? %>
+        <%= header.value if @decorated_game.locked? %>
       </div>
     <% end %>
-    <% @game.y_headers.sort_by(&:position).each do |header| %>
+    <% @decorated_game.y_headers.sort_by(&:position).each do |header| %>
       <div class="text-white bg-y-axis square">
-        <%= header.value if @game.locked? %>
+        <%= header.value if @decorated_game.locked? %>
       </div>
-      <% @game.squares.filter { |square| square.y == header.position }.sort_by(&:x).each do |square| %>
+      <% @decorated_game.squares.filter { |square| square.y == header.position }.sort_by(&:x).each do |square| %>
         <%= turbo_frame_tag(square) do %>
           <%= render(SquareComponent.new(square)) %>
         <% end %>
@@ -82,7 +86,7 @@
 </div>
 
 <%= turbo_frame_tag(:game_payments, class: "flex flex-col bg-white rounded-lg w-full sm:w-3/4 sm:mx-auto mx-2") do %>
-  <% if @game.payments.any? %>
+  <% if @decorated_game.payments.any? %>
     <div class="grid grid-cols-7 gap-1 px-4 py-2 border-b border-gray-200 border-double">
       <div class="text-center">Name</div>
       <div class="text-center">Squares</div>
@@ -91,15 +95,15 @@
       <div class="text-center">Paid out</div>
       <div class="col-span-2"></div>
     </div>
-    <% @game.payments.each do |payment| %>
+    <% @decorated_game.payments.each do |payment| %>
       <%= turbo_frame_tag(payment, class: "grid grid-cols-7 gap-1 px-4 py-6 border-b border-gray-200 last:border-b-0 even:bg-gray-200") do %>
-        <%= render payment, game: @game %>
+        <%= render payment, payouts: @decorated_game.payouts %>
       <% end %>
     <% end %>
 
     <div class="grid grid-cols-7 gap-1 px-4 py-2 border-b border-gray-200 rounded-b-lg">
       <div class="font-bold text-center">Total</div>
-      <div class="font-bold text-center">$<%= @game.total_squares_amount %></div>
+      <div class="font-bold text-center">$<%= @decorated_game.total_squares_amount %></div>
       <div class="col-span-2 text-center"></div>
     </div>
   <% end %>

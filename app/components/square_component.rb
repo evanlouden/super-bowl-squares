@@ -14,7 +14,7 @@ class SquareComponent < ViewComponent::Base
     list = %w[flex items-center justify-center h-12 text-center border rounded border-neutral-900 truncate]
     list << if user.present?
       %w[bg-white]
-    else
+    elsif !locked?
       %w[hover:bg-neutral-200 cursor-pointer]
     end
     list.flatten.join(" ")
