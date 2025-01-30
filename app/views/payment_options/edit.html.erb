@@ -1,0 +1,6 @@
+<%= turbo_frame_tag(:payment_option) do %>
+  <%= form_for @payment_option do |f| %>
+    <%= render CancelIconComponent.new %>
+    <%= render "form", f: f %>
+  <% end %>
+<% end %>

@@ -1,11 +1,19 @@
 class GamesController < ApplicationController
+  before_action :check_current_user, only: [:show]
+
   def show
     @game = Game.includes(:headers, :squares).find_by!(share_code: params[:id].upcase)
     @decorated_game = Decorators::GameDecorator.new(@game)
   end
 
   def new
-    @game = Game.new(first_quarter_payout: 20, second_quarter_payout: 20, third_quarter_payout: 20, final_payout: 40)
+    @game = Game.new(
+      square_price: 1,
+      first_quarter_payout: 20,
+      second_quarter_payout: 20,
+      third_quarter_payout: 20,
+      final_payout: 40
+    )
   end
 
 
@@ -23,7 +31,6 @@ class GamesController < ApplicationController
 
   def destroy
     @game = current_user.games.find_by!(share_code: params[:id])
-
     @game.destroy!
 
     render turbo_stream: turbo_stream.action(:redirect, user_path(current_user))

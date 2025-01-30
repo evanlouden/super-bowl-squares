@@ -87,25 +87,25 @@ class Decorators::GameDecorator < SimpleDelegator
   def first_amount
     return if first_quarter.blank?
 
-    (game.first_quarter_payout * 0.01 * game.total_squares_amount).to_i
+    (first_quarter_payout * 0.01 * total_squares_amount).to_i
   end
 
   def second_amount
     return if second_quarter.blank?
 
-    (game.second_quarter_payout * 0.01 * game.total_squares_amount).to_i
+    (second_quarter_payout * 0.01 * total_squares_amount).to_i
   end
 
   def third_amount
     return if third_quarter.blank?
 
-    (game.third_quarter_payout * 0.01 * game.total_squares_amount).to_i
+    (third_quarter_payout * 0.01 * total_squares_amount).to_i
   end
 
   def fourth_amount
     return if fourth_quarter.blank?
 
-    (game.final_payout * 0.01 * game.total_squares_amount).to_i
+    total_squares_amount - first_amount - second_amount - third_amount
   end
 
   def payouts
@@ -115,6 +115,15 @@ class Decorators::GameDecorator < SimpleDelegator
   private
 
   attr_reader :game, :first_quarter, :second_quarter, :third_quarter, :fourth_quarter
+
+  delegate(
+    :total_squares_amount,
+    :first_quarter_payout,
+    :second_quarter_payout,
+    :third_quarter_payout,
+    :final_payout,
+    to: :game
+  )
 
   def x_coordinate(value)
     headers.find { |header| header.value == value && header.axis == "x" }.position

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_10_230333) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_25_133711) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,6 +36,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_10_230333) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_headers_on_game_id"
+  end
+
+  create_table "payment_options", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "payment_method", null: false
+    t.string "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_payment_options_on_user_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -85,6 +94,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_10_230333) do
 
   add_foreign_key "games", "users"
   add_foreign_key "headers", "games"
+  add_foreign_key "payment_options", "users"
   add_foreign_key "payments", "games"
   add_foreign_key "payments", "users"
   add_foreign_key "squares", "games"

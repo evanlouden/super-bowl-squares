@@ -1,0 +1,8 @@
+<div class="flex justify-between p-1">
+  <div>
+    <span class="font-light"><%= payment_option.payment_method.titleize %></span>: <span class="font-bold"><%= payment_option.account_id %></span>
+  </div>
+  <% if payment_option.user == current_user %>
+    <%= link_to "Edit", edit_payment_option_path(payment_option), class: "text-blue-500 ml-4", data: { turbo_frame: "payment_option" } %>
+  <% end %>
+</div>

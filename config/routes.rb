@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :games, only: [:show, :new, :create, :destroy]
   resources :headers
   resources :lock_games
+  resources :payment_options, only: [:new, :create, :edit, :update]
   resources :payments, only: [:edit, :update]
   resources :scores
   resources :squares, only: [:update]

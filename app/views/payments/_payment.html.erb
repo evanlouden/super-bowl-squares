@@ -8,7 +8,9 @@
   <%= display_boolean(payment.paid_in) %>
 </div>
 <div class="flex items-center justify-center row-span-2 sm:row-span-1">
-  $<%= payouts[payment.user] %>
+  <% if payouts.present? %>
+    $<%= payouts[payment.user] %>
+  <% end %>
 </div>
 <div class="flex items-center justify-center row-span-2 text-2xl sm:row-span-1">
   <%= display_boolean(payment.paid_out) %>

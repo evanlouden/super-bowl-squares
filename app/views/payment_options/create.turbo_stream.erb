@@ -1,0 +1,7 @@
+<%= turbo_stream.append(:payment_options) do %>
+  <%= render @payment_option %>
+<% end %>
+
+<%= turbo_stream.update(:payment_option) do %>
+  <%= button_to "Add Payment Option", new_payment_option_path, method: :get, class: "button border border-white" %>
+<% end %>

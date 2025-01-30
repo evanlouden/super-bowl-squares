@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :games, dependent: :destroy
   has_many :squares
   has_many :payments, through: :games, dependent: :destroy
+  has_many :payment_options, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   encrypts :email, deterministic: true

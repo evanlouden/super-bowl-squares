@@ -11,5 +11,21 @@
         <%= link_to "Sign up", new_user_registration_path, class: "button" %>
       </div>
     <% end %>
+    <div class="flex flex-col max-w-sm mx-auto my-4" data-controller="toggle">
+      <div class="flex justify-center text-lg text-white cursor-pointer" data-action="click->toggle#toggleVisible">
+        How does it work?
+        <div class="ml-2">
+          <svg id="chevron-down" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+          </svg>
+          <svg id="chevron-up" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+          </svg>
+        </div>
+      </div>
+      <div data-toggle-target="element" class="invisible mt-2 font-light text-justify text-white">
+        Create a game and use the 4 letter code to share with friends. Claim as many squares as you want to buy by clicking on each one. Add payment options for people to pay. Track payments and winnings below the game board.
+      </div>
+    </div>
   </div>
 </div>

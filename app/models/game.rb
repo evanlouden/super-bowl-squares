@@ -5,7 +5,7 @@ class Game < ApplicationRecord
   has_many :users, through: :squares
   has_many :payments, dependent: :destroy
 
-  validates :square_price, presence: true
+  validates :square_price, presence: true, numericality: { greater_than: 0 }
   validate :payout_sum_must_equal_100
 
   before_create :create_share_code
@@ -23,7 +23,7 @@ class Game < ApplicationRecord
   end
 
   def total_squares_amount
-    claimed_squares * square_price
+    @total_squares_amount ||= claimed_squares * square_price
   end
 
   def headers_assigned?
@@ -33,10 +33,6 @@ class Game < ApplicationRecord
   private
 
   def payout_sum_must_equal_100
-    puts "first_quarter_payout: #{first_quarter_payout}"
-    puts "second_quarter_payout: #{second_quarter_payout}"
-    puts "third_quarter_payout: #{third_quarter_payout}"
-    puts "final_payout: #{final_payout}"
     if first_quarter_payout + second_quarter_payout + third_quarter_payout + final_payout != 100
       errors.add(:base, "Payout sum must equal 100%")
     end

@@ -9,11 +9,11 @@
             <% if game.users.any? %>
               <%= game.users.map(&:name).uniq.sort.join(", ") %>
             <% else %>
-              "No players yet."
+              No players yet
             <% end %>
           </div>
           <% if game.user == current_user %>
-            <%= link_to "Delete", game_path(game.share_code), method: :delete, class: "text-red-500 text-sm ml-auto", onclick: "return confirm('Delete this game?')" %>
+            <%= button_to "Delete", game_path(game.share_code), method: :delete, data: { turbo_confirm: "Delete this game?" }, class: "text-red-500 text-sm", form: { class: "ml-auto" } %>
           <% end %>
         </div>
       <% end %>

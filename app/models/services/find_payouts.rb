@@ -7,6 +7,8 @@ class Services::FindPayouts
 
   def call
     payouts.each_with_object(Hash.new(0)) do |payout, totals|
+      next if payout[:user].blank? || payout[:amount].blank?
+
       totals[payout[:user]] += payout[:amount]
     end
   end
@@ -25,6 +27,7 @@ class Services::FindPayouts
   end
 
   def second_quarter_user
+
     second_square.user || third_square.user || fourth_square.user || first_square.user
   end
 

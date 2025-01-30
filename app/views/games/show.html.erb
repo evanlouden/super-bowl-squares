@@ -2,7 +2,6 @@
   <p>Please rotate your device to landscape mode for a better experience.</p>
 </div>
 
-
 <div class="flex items-center ml-4 text-white">
   <%= link_to user_path(current_user) do %>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
@@ -46,27 +45,38 @@
     <div class="p-2 border-r border-gray-300"><%= number_to_currency(@decorated_game.third_amount) %></div>
     <div class="p-2"><%= number_to_currency(@decorated_game.fourth_amount) %></div>
   </div>
-<% elsif @decorated_game.user == current_user %>
-  <div class="flex justify-center mb-4">
-    <% if @decorated_game.headers_assigned? %>
-      <%= button_to "Lock Game", lock_game_path(@decorated_game.share_code), method: :patch, class: "button button-red border border-white" %>
-    <% else %>
-      <%= button_to "Lock Game and Assign Numbers", lock_game_path(@decorated_game.share_code), method: :patch, class: "button button-red border border-white", onclick: "return confirm('Lock this game?');" %>
+<% else  %>
+  <div class="flex items-center justify-center w-10/12 mx-auto mb-4">
+    <%= render CardComponent.new do  %>
+      <div class="flex p-1">
+        <span class="font-light">Share Code:</span> <span class="ml-2 font-bold"><%= @decorated_game.share_code %></span>
+      </div>
+      <%= turbo_frame_tag(:payment_options, class: "flex flex-col") do %>
+        <% @decorated_game.user.payment_options.each do |payment_option| %>
+          <%= turbo_frame_tag(payment_option) do %>
+            <%= render payment_option %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% if @decorated_game.user == current_user %>
+        <%= turbo_frame_tag(:payment_option, class: "flex justify-center mt-2") do %>
+          <%= button_to "Add Payment Option", new_payment_option_path, method: :get, class: "button border border-white" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="flex items-center justify-around w-10/12 mx-auto mb-4">
+    <% if @decorated_game.user == current_user %>
+      <%= button_to "Lock Squares and Assign Numbers", lock_game_path(@decorated_game.share_code), method: :patch, class: "button button-red border border-white", data: { turbo_confirm: "Lock this game? This cannot be undone." } %>
     <% end %>
   </div>
 <% end %>
 
-
-<div class="w-full m-auto mb-4 lg:w-10/12">
+<div class="w-10/12 mx-auto mb-4">
   <div class="grid grid-cols-11 gap-1">
-    <% if @decorated_game.locked? && @decorated_game.user == current_user %>
-      <div class="bg-yellow-500 square">
-        <%= button_to "Unlock Game", lock_game_path(@decorated_game.share_code), action: :update, method: :patch, class: "text-sm" %>
-      </div>
-    <% else %>
-      <div class="bg-transparent border-none square">
-      </div>
-    <% end %>
+    <div class="bg-transparent border-none square">
+    </div>
     <% @decorated_game.x_headers.sort_by(&:position).each do |header| %>
       <div class="text-white bg-x-axis square">
         <%= header.value if @decorated_game.locked? %>
@@ -85,26 +95,27 @@
   </div>
 </div>
 
-<%= turbo_frame_tag(:game_payments, class: "flex flex-col bg-white rounded-lg w-full sm:w-3/4 sm:mx-auto mx-2") do %>
-  <% if @decorated_game.payments.any? %>
-    <div class="grid grid-cols-7 gap-1 px-4 py-2 border-b border-gray-200 border-double">
-      <div class="text-center">Name</div>
-      <div class="text-center">Squares</div>
-      <div class="text-center">Paid in</div>
-      <div class="text-center">Winnings</div>
-      <div class="text-center">Paid out</div>
-      <div class="col-span-2"></div>
-    </div>
+<div class="flex flex-col w-full mx-2 bg-white rounded-lg sm:w-3/4 sm:mx-auto">
+  <div class="grid grid-cols-7 gap-1 px-4 py-2 border-b border-gray-200 border-double">
+    <div class="text-center">Name</div>
+    <div class="text-center">Squares</div>
+    <div class="text-center">Paid in</div>
+    <div class="text-center">Winnings</div>
+    <div class="text-center">Paid out</div>
+    <div></div>
+    <div></div>
+  </div>
+  <%= turbo_frame_tag(:game_payments) do %>
     <% @decorated_game.payments.each do |payment| %>
       <%= turbo_frame_tag(payment, class: "grid grid-cols-7 gap-1 px-4 py-6 border-b border-gray-200 last:border-b-0 even:bg-gray-200") do %>
         <%= render payment, payouts: @decorated_game.payouts %>
       <% end %>
     <% end %>
-
-    <div class="grid grid-cols-7 gap-1 px-4 py-2 border-b border-gray-200 rounded-b-lg">
-      <div class="font-bold text-center">Total</div>
-      <div class="font-bold text-center">$<%= @decorated_game.total_squares_amount %></div>
-      <div class="col-span-2 text-center"></div>
-    </div>
   <% end %>
-<% end %>
+
+  <div class="grid grid-cols-7 gap-1 px-4 py-2 border-t border-b border-gray-200 rounded-b-lg">
+    <div class="font-bold text-center">Total</div>
+    <div class="font-bold text-center">$<%= @decorated_game.total_squares_amount %></div>
+    <div class="col-span-2 text-center"></div>
+  </div>
+</div>

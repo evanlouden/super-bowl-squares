@@ -1,0 +1,22 @@
+<div class="text-center text-red-500">
+  <% f.object.errors.full_messages.each do |message| %>
+    <%= message %><br>
+  <% end %>
+</div>
+
+<div class="mb-4">
+  <%= f.label :payment_method, class: "block text-sm text-gray-700 font-medium" %>
+  <%= f.select :payment_method,
+    PaymentOption::PAYMENT_METHODS.map { |method| [method.titleize, method] }, { prompt: "Select Payment Method" },
+    class: "text-black block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0" %>
+</div>
+
+<div class="mb-4">
+  <%= f.label :account_id, class: "block text-sm text-gray-700 font-medium" %>
+  <%= f.text_field :account_id,
+    class: "w-full mt-1 px-3 py-2 leading-tight text-gray-700 border border-none rounded shadow appearance-none bg-gray-100 focus:outline-none focus:ring focus:ring-blue-500"  %>
+</div>
+
+<div class="mb-4">
+  <%= f.submit f.object.persisted? ? "Update" : "Create", class: "button w-full" %>
+</div>

@@ -4,6 +4,7 @@ module ApplicationHelper
   end
 
   def number_to_currency(value)
+    return if value.blank?
     "$#{value}"
   end
 end

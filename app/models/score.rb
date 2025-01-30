@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Score < ApplicationRecord
-  X_AXIS_TEAM_NAME = "Bills"
-  Y_AXIS_TEAM_NAME = "Broncos"
+  X_AXIS_TEAM_NAME = "Eagles"
+  Y_AXIS_TEAM_NAME = "Chiefs"
 
 
   validates :x_axis_score, :y_axis_score, presence: true
