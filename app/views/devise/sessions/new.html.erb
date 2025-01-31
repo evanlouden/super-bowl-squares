@@ -39,6 +39,6 @@
         <%= f.submit "Log in", class: "button" %>
       </div>
     <% end %>
-    <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+    <%= link_to "Forgot your password?", new_password_path(resource_name), class: "text-blue-500", data: { turbo: false } %><br />
   </div>
 <% end %>
