@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.4.1"
+ruby "3.4.7"
 
 gem "cssbundling-rails"
 gem "devise", "~> 4.9"
