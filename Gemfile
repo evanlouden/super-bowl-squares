@@ -13,7 +13,7 @@ gem "redis", ">= 4.0.1"
 gem "sprockets-rails"
 gem "stimulus-rails"
 gem "turbo-rails"
-gem "view_component", "~> 3.10"
+gem "view_component", "~> 4.2"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
