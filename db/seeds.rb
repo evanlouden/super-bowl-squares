@@ -9,3 +9,4 @@
 #   end
 
 User.find_or_create_by!(email: "evanloude@gmail.com", password: "password", name: "Loud1")
+User.find_or_create_by!(email: "sylviajoylouden@gmail.com", password: "password", name: "Sylvia")
