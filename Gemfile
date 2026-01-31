@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.4.7"
 
 gem "cssbundling-rails"
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 gem "jsbundling-rails"
 gem "mailgun-ruby", "~> 1.4"
 gem "pg", "~> 1.6"
