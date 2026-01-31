@@ -28,6 +28,8 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "pry-rails", "~> 0.3.11"
   gem "rspec-rails", "~> 7.1"
+  gem "capybara"
+  gem "selenium-webdriver"
 end
 
 group :development do
