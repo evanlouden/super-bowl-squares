@@ -5,7 +5,7 @@
 <div class="mx-auto md:w-1/2">
   <%= turbo_frame_tag(:scores) do %>
     <div class="grid grid-cols-4 text-center bg-white border border-gray-300 rounded-t-md">
-      <div class="p-4 text-white bg-x-axis rounded-tl-md"><%= Score::X_AXIS_TEAM_NAME %></div>
+      <div class="p-4 bg-x-axis rounded-tl-md"><%= Score::X_AXIS_TEAM_NAME %></div>
       <div class="p-4 text-white bg-y-axis"><%= Score::Y_AXIS_TEAM_NAME %></div>
       <div class="p-4">Quarter</div>
       <div class="p-4 rounded-tr-md">Final</div>

@@ -21,7 +21,7 @@
     <div class="p-2 border-b border-r border-gray-300">3rd</div>
     <div class="p-2 border-b border-gray-300">Final</div>
 
-    <div class="p-2 text-white border-b border-l border-r border-gray-300 bg-x-axis"><%= Score::X_AXIS_TEAM_NAME %></div>
+    <div class="p-2 border-b border-l border-r border-gray-300 bg-x-axis"><%= Score::X_AXIS_TEAM_NAME %></div>
     <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.first_quarter_x_axis_score %></div>
     <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.second_quarter_x_axis_score %></div>
     <div class="p-2 border-b border-r border-gray-300"><%= @decorated_game.third_quarter_x_axis_score %></div>
@@ -78,7 +78,7 @@
     <div class="bg-transparent border-none square">
     </div>
     <% @decorated_game.x_headers.sort_by(&:position).each do |header| %>
-      <div class="text-white bg-x-axis square">
+      <div class="bg-x-axis square">
         <%= header.value if @decorated_game.locked? %>
       </div>
     <% end %>
