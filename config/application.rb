@@ -42,7 +42,7 @@ module SuperBowlSquares
     config.action_mailer.delivery_method = :mailgun
     config.action_mailer.mailgun_settings = {
       api_key: Rails.application.credentials.dig(:mailgun, :api_key),
-      domain: 'sandbox4fff94df0d064cf3b3014cb241bb834f.mailgun.org',
+      domain: Rails.application.credentials.dig(:mailgun, :api_key),
     }
   end
 end
