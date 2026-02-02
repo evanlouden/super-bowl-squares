@@ -1,3 +1,3 @@
 <%= turbo_stream.update(@payment) do %>
-  <%= render(@payment) %>
+  <%= render @payment, payouts: @decorated_game.payouts %>
 <% end %>

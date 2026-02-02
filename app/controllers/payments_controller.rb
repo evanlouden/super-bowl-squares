@@ -2,6 +2,7 @@
 
 class PaymentsController < ApplicationController
   before_action :set_payment, only: %i[edit update]
+  before_action :set_decorated_game, only: :update
 
   def edit; end
 
@@ -13,6 +14,10 @@ class PaymentsController < ApplicationController
 
   def set_payment
     @payment = current_user.payments.find(params[:id])
+  end
+
+  def set_decorated_game
+    @decorated_game = Decorators::GameDecorator.new(@payment.game)
   end
 
   def payment_params
