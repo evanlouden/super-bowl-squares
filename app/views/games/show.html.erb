@@ -88,7 +88,7 @@
       </div>
       <% @decorated_game.squares.filter { |square| square.y == header.position }.sort_by(&:x).each do |square| %>
         <%= turbo_frame_tag(square) do %>
-          <%= render(SquareComponent.new(square)) %>
+          <%= render(SquareComponent.new(square, current_score_x: @decorated_game.current_score_x_coordinate, current_score_y: @decorated_game.current_score_y_coordinate)) %>
         <% end %>
       <% end %>
     <% end %>

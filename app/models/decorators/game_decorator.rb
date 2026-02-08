@@ -112,6 +112,24 @@ class Decorators::GameDecorator < SimpleDelegator
     @payouts ||= Services::FindPayouts.new(game).call
   end
 
+  def current_score
+    return @current_score if defined?(@current_score)
+
+    @current_score = @scores.max_by(&:updated_at)
+  end
+
+  def current_score_x_coordinate
+    return if current_score.blank?
+
+    x_coordinate(find_last_digit(current_score.x_axis_score))
+  end
+
+  def current_score_y_coordinate
+    return if current_score.blank?
+
+    y_coordinate(find_last_digit(current_score.y_axis_score))
+  end
+
   private
 
   attr_reader :game, :first_quarter, :second_quarter, :third_quarter, :fourth_quarter
